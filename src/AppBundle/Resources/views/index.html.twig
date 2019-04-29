@@ -1,0 +1,28 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+
+    <div class="container" style="text-align: justify">
+        <h1 class="center">{{ 'home.welcome'|trans }}</h1>
+        <p>
+            {{ 'home.part1'|trans }}
+            <a href="{{ path('cv') }}">CV</a>
+            {{ 'home.part2'|trans }}
+            <a href="{{ path('realisations') }}">realisations</a>
+            {{ 'home.part3'|trans }}
+            <a href="{{ path('blog_index') }}">"blog".</a>
+        </p>
+        <p>
+            {{ 'home.part4'|trans }}
+        </p>
+        <p>
+            {{ 'home.part5'|trans }} <br><br><br><br><br>
+        </p>
+        <p>
+            {{ 'home.part6'|trans }}
+        </p>
+    </div>
+
+{% endblock %}

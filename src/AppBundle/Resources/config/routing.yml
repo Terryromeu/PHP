@@ -1,0 +1,29 @@
+app :
+  path : /
+  defaults : {_controller: AppBundle:Default:index}
+
+cv :
+  path : /CV
+  defaults : {_controller: AppBundle:CV:index}
+
+realisations :
+  path : /realisations
+  defaults : {_controller: AppBundle:Realisations:index}
+
+blog_index :
+  path : /blog
+  defaults : {_controller: AppBundle:Blog:index}
+
+blog_article :
+  path : /blog/article/{id}
+  defaults :
+    _controller : AppBundle:Blog:article
+
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin

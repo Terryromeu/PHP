@@ -1,0 +1,36 @@
+home:
+  welcome: Bonjour tout le monde
+  part1: |
+        Premièrement, permettez-moi de me présenter: je m'appelle Terry ROMEU et je suis en troisième
+        année à l'école d'ingénieurie informatique INGÉSUP à Bordeaux.
+        Ceci est un petit site réalisé sous Symfony3 dans le cadre d'un projet avec l'école.
+        Il y sera présenté mon
+  part2: , mes différentes
+  part3: , ainsi qu'une petite partie
+  part4: >
+          Sur celui-ci, vous pourrez avoir accès aux différentes pages citées plus haut, y poster des
+          commentaires, vous identifier pour avoir un joli petit avatar, et, si vous avez la chance d'être
+          admin, éditer le contenu du blog, éditer les utilisateurs et faire la modération des commentaires.
+  part5: >
+          Pour le réaliser j'ai utilisé les bundles FOSUserBundle, Sonata Admin Bundle,
+          JMSI18nRoutingBundle
+  part6: Bonne découverte !
+
+navbar&footer:
+  realisations: Réalisations
+  links: Quelques liens...
+  project: Projet de classe Symfony
+  content: Ici, devra être écrit un peu de contenu...
+  legal: Mentions légales
+  made: Un site réalisé par Terry ROMEU.
+
+cv:
+  welcome: Bienvenue dans la section CV !
+  welcomeText: >
+          Vous trouverez ci-dessous mon CV rédigé de manière non-traditionnelle. Mais vous pouvez aussi le
+          télécharger au format PDF ici
+  download: télécharger
+  work:
+    title: Expériences professionnelles
+  skills:
+    title: Compétences

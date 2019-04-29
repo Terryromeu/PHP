@@ -1,0 +1,39 @@
+home:
+  welcome: Hello everybody
+  part1: |
+        First of all, let me introduce myself: my name is Terry ROMEU and I am in the third year
+        of the IT School INGÉSUP in Bordeaux.
+        This is a little website made with Symfony3 in a school project context.
+        You'll be able to see my
+  part2: , my several
+  part3: , and a little
+  part4: >
+        On this website, you'll have a fully access to the pages mentionned above, post comments,
+        log in to have a beautiful avatar, and, if you're lucky enough to be an admin, you'll can
+        edit directly the content of the website, users, and moderate the comments.
+  part5: >
+        To make everything possible, I had to use the following bundles - FOSUserBundle, Sonata Admin Bundle,
+        JMSI18nRoutingBundle.
+  part6: >
+        I would like to apologize but the entire website will not be available in English because of a
+        lack of time.
+        Enjoy the discovery!
+
+navbar&footer:
+  realisations: Realisations
+  links: Some links
+  project: School project Symfony
+  content: Here, some content will have to be written...
+  legal: Legal notices
+  made: A website performed by Terry ROMEU.
+
+cv:
+  welcome: Welcome in the CV section !
+  welcomeText: >
+          You'll find below my CV, written in a non-traditionnal way. You can also download it in PDF
+          right here
+  download: download
+  work:
+    title: Work experiences
+  skills:
+    title: Skills

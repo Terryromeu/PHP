@@ -1,0 +1,114 @@
+{% extends 'AppBundle::layout.html.twig' %}
+{% block style %}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h2 class="center">{{ 'cv.welcome'|trans }}</h2>
+        <p class="center" style="margin-top: 2em; margin-bottom: 2em;">
+            {{ 'cv.welcomeText'|trans }}: <a href="{{ asset('downloads/CV_E.pdf') }}" download="{{ asset('downloads/CV_E.pdf') }}">{{ 'cv.download'|trans }}</a>
+        </p>
+
+
+        <h3 class="center" style="margin-top: 2em; margin-bottom: 1.5em; border: solid 1px black"><em><a class="black-text" href="#!">Formation</a></em></h3>
+        <div class="row">
+            <div class="center valign-wrapper">
+                <div class="col s2">
+                    <a href="#!" class="prev2 red-text"><i class="material-icons">keyboard_arrow_left</i></a>
+                </div>
+                <div class="col s8">
+                    {% for formation in formation %}
+                        <div class="carDiv2">
+                            <h5 class="red-text text-darken-3">{{ formation.diplome }}</h5>
+                            <span class="blue-text">{{ formation.particularite }}</span><br>
+                            <u>{{ formation.periode }}</u><br>
+                            <em>{{ formation.ville }}</em>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col s2">
+                    <a href="#!" class="next2 red-text"><i class="material-icons">keyboard_arrow_right</i></a>
+                </div>
+            </div>
+        </div>
+
+
+        <h3 class="center" style="margin-top: 2em; margin-bottom: 1.5em; border: solid 1px black"><em><a class="black-text" href="#!">{{ 'cv.work.title'|trans }}</a></em></h3>
+        <div class="row">
+            <div class="center valign-wrapper">
+                <div class="col s2">
+                    <a href="#!" class="prev red-text"><i class="material-icons">keyboard_arrow_left</i></a>
+                </div>
+                <div class="col s8">
+                    {% for experience in experience %}
+                        <div class="carDiv">
+                            <div>
+                                <img src="{{ asset('images/cv/calendar.png') }}" alt=""><br>
+                                <span style="font-size: 3em;">{{ experience.annee }}</span>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <h5 class="red-text text-darken-3">{{ experience.intitule }}</h5>
+                                <span class="blue-text">{{ experience.periode }}</span>,
+                                {{ experience.ville }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col s2">
+                    <a href="#!" class="next red-text"><i class="material-icons">keyboard_arrow_right</i></a>
+                </div>
+            </div>
+        </div>
+
+
+        <h3 class="center" style="margin-top: 2em; margin-bottom: 1.5em; border: solid 1px black"><em><a class="black-text" href="#!">{{ 'cv.skills.title'|trans }}</a></em></h3>
+        <div class="row">
+            <div class="col m4 s4">
+                <h4>SQL (Certifié)</h4>
+                <div class="progress deep-purple lighten-4">
+                    <div class="determinate deep-purple" style="width: 70%"></div>
+                </div>
+            </div>
+            <div class="col m4 s4">
+                <h4>HTML</h4>
+                <div class="progress brown lighten-4">
+                    <div class="determinate brown" style="width: 95%"></div>
+                </div>
+            </div>
+            <div class="col m4 s4">
+                <h4>CSS</h4>
+                <div class="progress">
+                    <div class="determinate" style="width: 85%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m4 s4">
+                <h4>JavaScript</h4>
+                <div class="progress green lighten-4">
+                    <div class="determinate green" style="width: 60%"></div>
+                </div>
+            </div>
+            <div class="col m4 s4">
+                <h4>JAVA</h4>
+                <div class="progress red lighten-4">
+                    <div class="determinate red" style="width: 40%"></div>
+                </div>
+            </div>
+            <div class="col m4 s4">
+                <h4>PHP</h4>
+                <div class="progress lime lighten-4">
+                    <div class="determinate lime" style="width: 70%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('carouselJS/carousel.js') }}"></script>
+    <script>
+        $(function () {
+            carouselJS();
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <style>
+            #userPicCropped {
+                margin: auto;
+                margin-bottom:2em;
+                max-width: 7em;
+                max-height: 7em;
+                overflow: hidden;
+                border-radius: 50%;
+                border: 1px solid white;
+            }
+            #userPicCropped img {
+                max-height: 8em;
+            }
+            .collapsible-header{
+                border: 1px white solid;
+            }
+        </style>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <title>Projet de classe - {% block title %}{% endblock %}</title>
+        {% block style %}{% endblock %}
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    </head>
+    <body>
+
+
+        <header>
+            <nav class="blue-grey darken-2">
+                <div class="nav-wrapper">
+                    <a href="{{ path('app') }}" class="brand-logo center">
+                        <img style="max-width: 1.3em; margin-top: 0.4em;" src="{{ asset('images/logo/tau.png') }}" alt="">
+                        <img style="max-width: 1.3em;" src="{{ asset('images/logo/epsilon.png') }}" alt="">
+                        <img style="max-width: 1.3em;" src="{{ asset('images/logo/gamma.png') }}" alt="">
+                        <img style="max-width: 1.3em;" src="{{ asset('images/logo/gamma2.png') }}" alt="">
+                        <img style="max-width: 1.3em;" src="{{ asset('images/logo/upsilon.png') }}" alt="">
+                    </a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="left hide-on-med-and-down">
+                        <li><a href="{{ path('cv') }}">CV</a></li>
+                        <li><a href="{{ path('realisations') }}">{{ 'navbar&footer.realisations'|trans }}</a></li>
+                        <li><a href="{{ path('blog_index') }}">Blog</a></li>
+                    </ul>
+                    <ul class="side-nav" id="mobile-demo">
+                        <li><a href="{{ path('cv') }}">CV</a></li>
+                        <li><a href="{{ path('realisations') }}">{{ 'navbar&footer.realisations'|trans }}</a></li>
+                        <li><a href="{{ path('blog_index') }}">Blog</a></li>
+                    </ul>
+                    <div class="right">
+                        <a  href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale':'fr'})) }}"><img style="max-width: 1.6em; margin-top: 1.3em; margin-right: 0.8em;" src="{{ asset('images/flag/france.png') }}" alt=""></a>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale':'en'})) }}"><img style="max-width: 1.6em; margin-right: 1em;" src="{{ asset('images/flag/uk.png') }}" alt=""></a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+        <main>
+            <div class="row" style="min-height: 100vh;">
+                <div class="col m8 s12">
+                    {% block fos_user_content %}
+                    {% endblock %}
+                    {% for message in app.session.flashbag.get('info') %}
+                        <div class="card teal darken-1">
+                            <div class="card-content white-text" >
+                                <p>{{ message }}<a class="white-text right" href="#" onclick="$('.card').fadeOut(function(){$(this).remove();});">X</a></p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% block body %}
+                    {% endblock %}
+                </div>
+                <div class="col m3 offset-m1 hide-on-small-only blue-grey darken-2 z-depth-4 white-text" style="min-height: 100vh; margin-top: 15px">
+                    <div class="container "><h1></h1>
+                        <div style="margin-top: 2em; margin-bottom: 2em;">
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                                <a href="{{ path('fos_user_security_logout') }}">
+                                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                </a>
+                                <hr style="margin-top: 2em; margin-bottom: 2em;">
+                                {% if app.user.image.filename is not defined %}
+                                {% else %}
+                                    <div class="center" id="userPicCropped">
+                                        <a href="#"><img src="{{ asset('uploads/' ~ app.user.image.filename) }}" alt=""/></a>
+                                    </div>
+                                {% endif %}
+                                    <u>Username</u> : <em> {{ app.user.username }}</em>
+                                    <p><u>Email</u> :<em> {{ app.user.email }}</em></p>
+
+
+                            {% else %}
+                                <div>
+                                    <p>Vous n'êtes pas encore connecté ou inscrit sur mon site?</p>
+                                    <ul>
+                                        <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                                        <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                            <hr style="margin-top: 2em; margin-bottom: 2em;">
+                            <ul class="collapsible" data-collapsible="expandable">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <div class="collapsible-header blue-grey darken-2"><i class="material-icons">filter_list</i>Administration</div>
+                                        <div class="collapsible-body">
+                                            <em>
+                                                - <a class="white-text" href="{{ path('sonata_admin_dashboard') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Dashboard</span></a><br>
+                                                - <a class="white-text" href="{{ path('article_create') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Écrire un article</span></a><br>
+                                                - <a class="white-text" href="{{ path('article_list') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Liste des articles</span></a><br>
+                                                - <a class="white-text" href="{{ path('cvformation_create') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Ajouter une formation</span></a><br>
+                                                - <a class="white-text" href="{{ path('cvformation_list') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Liste des formations</span></a><br>
+                                                - <a class="white-text" href="{{ path('cvexperience_create') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Ajouter une expérience</span></a><br>
+                                                - <a class="white-text" href="{{ path('cvexperience_list') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Liste des expériences</span></a><br>
+                                                - <a class="white-text" href="{{ path('realisations_create') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Ajouter une réalisation</span></a><br>
+                                                - <a class="white-text" href="{{ path('realisations_list') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Liste des réalisations</span></a><br>
+                                                - <a class="white-text" href="{{ path('user_list') }}"><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">Liste des utilisateurs</span></a>
+                                            </em>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                <li>
+                                    <div class="collapsible-header blue-grey darken-2"><i class="material-icons">filter_list</i>Derniers articles</div>
+                                    <div class="collapsible-body"><em><span onmouseover="this.style.color='#c42b2e'" onmouseout="this.style.color='#fff'">{{ render(controller("AppBundle:Blog:menu", {'limit': 4})) }}</span></em></div>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <footer class="page-footer blue-grey darken-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">{{ 'navbar&footer.project'|trans }}</h5>
+                        <p class="grey-text text-lighten-4">{{ 'navbar&footer.content'|trans }}</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">{{ 'navbar&footer.links'|trans }}</h5>
+                        <ul>
+                            <li><a class="grey-text text-lighten-3" href="#!">Contact</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">{{ 'navbar&footer.legal'|trans }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2017 Copyright Text
+                    <p class="grey-text text-lighten-4 right" href="#!">{{ 'navbar&footer.made'|trans }}</p>
+                </div>
+            </div>
+        </footer>
+
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+        <script>
+            $( document ).ready(function(){
+                $(".button-collapse").sideNav();
+                $('.collapsible').collapsible();
+                $(document).on('click', '#cardContainer .closeCardContainer', function() {
+                    $(this).fadeOut(function(){
+                        $(this).remove();
+                    });
+                });
+                $('.materialboxed').materialbox();
+            });
+        </script>
+        {% block javascript %}
+        {% endblock %}
+    </body>
+</html>

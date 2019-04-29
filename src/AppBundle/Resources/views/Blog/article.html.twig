@@ -1,0 +1,116 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+
+{% block title %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        {############################### Partie Article #############################################}
+
+        <h2 class="center">{{ article.title }}</h2>
+        <em class="right grey-text" style="margin-bottom: 3em; margin-top: -1em;">Par {{ article.author }}, le {{ article.date|date('d/m/Y') }}</em>
+        <div class="row" style="margin-bottom: 3em;">
+            <div class="col m8 offset-m2">
+                <img class="responsive-img materialboxed" src="{{ asset('uploads/' ~ article.image.filename) }}" alt="">
+            </div>
+        </div>
+        <div style="margin-bottom: 3em;">{{ article.content }}</div>
+        <hr style="margin-bottom: 3em;">
+
+        {############################### Fin Partie article #############################################}
+
+
+        {############################### Partie Commentaires #############################################}
+        {% if (is_granted ('ROLE_USER')) or (is_granted ('ROLE_ADMIN')) or (is_granted ('ROLE_SUPER_ADMIN')) %}
+
+            <a href="#!" class="btn brown lighten-1" id="comButton" style="margin-bottom: 3em;">
+                Afficher
+                <span style="font-size: x-large; margin-left: 6px; margin-right: 6px;" class="comCounter"></span>
+                commentaires
+            </a><br>
+            <div id="coms" style="margin-bottom: 3em;">
+                {% if listeCommentaires|length > 0 %}
+                    {% for commentaire in listeCommentaires if commentaire.published%}
+
+                            <div class="row">
+                                <div class="col m5">
+                                    <div class="row">
+                                        <div class="col m3">
+                                            {% if commentaire.user.image is null %}
+                                                <div style="width: 40px; height: 50px; border: 1px black solid; padding: 5px"> <div style="transform: rotate(20deg); font-size: x-small;">Pas d'avatar</div></div>
+                                            {% else %}
+                                                <img width="40" height="50" src="{{ asset('uploads/' ~ commentaire.user.image.filename) }}" alt="user profile picture">
+                                            {% endif %}
+                                        </div>
+                                        <div class="col m9">
+                                            Posté par: <em>{{ commentaire.user }}<br></em>
+                                            {{ commentaire.date|date('d/m/y à H:i') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col m7">
+                                    <div class="comContent">
+                                        {# Couleurs aléatoires pour blockquotes #}
+                                        {% set values = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']%}
+                                        <blockquote style="border-left-color: #{{random(values)~ random(values)~ random(values)~ random(values)~ random(values)~ random(values)  }};"> {{ commentaire.content }}</blockquote>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                    {% else %}
+                        <p style="margin-bottom: 3em;">Il n'y a aucun commentaire.</p>
+                    {% endfor %}
+                {% else %}
+                    <p>Il n'y a aucun commentaire.</p>
+                {% endif %}
+            </div>
+            <a id="scaleButton" href="#!" class="btn red darken-4" style="margin-bottom: 3em;">Ajouter un commentaire</a>
+
+            <div id="scaleContent" class="row blue-grey lighten-5" style="border: solid 1px lightgrey; display:none; padding: 10px;">
+                {{ form_start(form, {'attr': {'class': 'col s8'}}) }}
+                <label for="commentaire_utilisateur" class ="required pink-text">Utilisateur</label>
+                <div id="commentaire_utilisateur">{{ app.user.username }}</div>
+                <label for="commentaire_dateactu" class ="required pink-text">Date</label>
+                <div id="commentaire_dateactu">{{ "now"|date("d/m/Y") }}</div>
+                <label for="commentaire_content" class ="required pink-text">Contenu</label>
+                {{ form_widget(form.content, {'attr': {'class': 'materialize-textarea'}}) }}
+                {{ form_errors(form.content) }}
+                {{ form_end(form) }}
+            </div>
+
+
+        {% else %}
+            <p>Veuillez vous identifier pour pouvoir poster un commentaire</p>
+        {% endif %}
+
+        {% if (is_granted ('ROLE_ADMIN')) or (is_granted('ROLE_SUPER_ADMIN')) %}
+            {# Code pour administrer les commentaires #}
+        {% endif %}
+
+        {############################### Fin Partie Commentaires #############################################}
+
+
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(function(){
+            var counter = $('.comContent').length;
+            $('.comCounter').html(counter);
+            $('#scaleButton').click(function() {
+                $('#scaleContent').toggle( "slide", 2000);
+            });
+            $('#coms').hide();
+            $('#comButton').click(function () {
+                $('#coms').toggle( "slide", 2000);
+            });
+        })
+    </script>
+{% endblock %}
